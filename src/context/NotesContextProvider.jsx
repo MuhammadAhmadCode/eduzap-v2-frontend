@@ -4,13 +4,12 @@ import { NotesContext } from './NotesContext'
 const NotesContextProvider = ({ children }) => {
     const[filterText,setFilterText] = useState("")
 
-    const [notes, setNotes] = useState(() => {
-        const stored = localStorage.getItem("notes")
-        return stored ? JSON.parse(stored) : []
-    })
-
+    const [notes, setNotes] = useState([])
+    
     useEffect(() => {
-        localStorage.setItem("notes",JSON.stringify(notes))
+        fetch("http://localhost:3000/api/notes/allnotes")
+        .then((res)=>res.json())
+        .then((data)=>setNotes(data.notes))
     }, [notes])
     
     return (

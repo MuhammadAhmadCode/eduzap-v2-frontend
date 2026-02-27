@@ -4,7 +4,7 @@ import { AiFillDelete } from 'react-icons/ai';
 import { BiCopy, BiSave } from 'react-icons/bi';
 import { FaEdit } from 'react-icons/fa';
 import { GiCancel, GiThumbUp } from 'react-icons/gi';
-import { motion } from 'motion/react';
+import { complex, motion } from 'motion/react';
 
 
 
@@ -16,16 +16,20 @@ const TasksMapping = () => {
   const [edit, setEdit] = useState("")
   const [showCompleted, setShowCompleted] = useState(true)
   const { tasks, setTasks } = useContext(TaskContext);
+  const [taskCompleted,setTaskCompleted] = useState(false)
 
-  const handleCheckBox = (e) => {
+  const handleCheckBox = async(e) => {
     let id = e.target.name
-    let index = tasks.findIndex((task) => {
-      return task._id == id
-    })
+    setTaskCompleted(!taskCompleted)
+    await fetch(`http://localhost:3000/api/tasks/updateTaskCompleted/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({completed: taskCompleted}) })
 
-    let newTasks = [...tasks]
-    newTasks[index].completed = !newTasks[index].completed
-    setTasks(newTasks)
+    // let index = tasks.findIndex((task) => {
+    //   return task._id == id
+    // })
+
+    // let newTasks = [...tasks]
+    // newTasks[index].completed = !newTasks[index].completed
+    // setTasks(newTasks)
   }
 
 
@@ -38,7 +42,7 @@ const TasksMapping = () => {
   }
 
   const handleSave = async(id) => {
-    // await fetch(`http://localhost:3000/api/tasks/updatetask/${id}`,{ method: "PATCH", headers: { "Content-Type": "application/json"},body:edit})
+    await fetch(`http://localhost:3000/api/tasks/updatetask/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({edit:edit}) })
     setEditingId(null)
   }
 
@@ -77,7 +81,7 @@ const TasksMapping = () => {
 
       {tasks.map((task) => {
         return (showCompleted || !task.completed) && (
-          <motion.div whileHover={{ scale: 1.04 }} key={task._id} className='bg-[#191928] hover:bg-[#212131] hover:shadow hover:shadow-gray-600 shadow shadow-gray-500 border border-slate-800 flex items-center flex-wrap gap-3 md:flex-nowrap justify-between p-3  rounded-2xl text-white'>
+          <motion.div key={task._id} whileHover={{ scale: 1.04 }} className='bg-[#191928] hover:bg-[#212131] hover:shadow hover:shadow-gray-600 shadow shadow-gray-500 border border-slate-800 flex items-center flex-wrap gap-3 md:flex-nowrap justify-between p-3  rounded-2xl text-white'>
 
             <div className='flex gap-3 justify-center items-center'>
 

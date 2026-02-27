@@ -5,16 +5,14 @@ import { motion } from "motion/react"
 
 
 const LatestTasks = () => {
-    const { tasks, setTasks } = useContext(TaskContext)
+    const { tasks} = useContext(TaskContext)
 
-    const TaskDelete = (id) => {
+    const TaskDelete = async (id) => {
         const c = confirm("Do you really want to delete the task?")
         if (c) {
-            const newTasks = tasks.filter((task) => task.id !== id)
-            setTasks(newTasks)
+          await fetch(`http://localhost:3000/api/tasks/deltetask/${id}`,{ method: "DELETE", headers: { "Content-Type": "application/json" }})
         }
-    }
-
+      }
 
     return (
         <div className='mt-6 ml-14 text-white'>
@@ -29,9 +27,9 @@ const LatestTasks = () => {
                             drag
                             dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
                             whileHover={{scale:1.03}}
-                            key={task.id}
-                            className='md:w-[60%] w-[90%] p-3 px-4 rounded-2xl hover:bg-slate-700 bg-slate-800 border border-slate-700 flex justify-between'>
-                            <h2 className='text-xl'>{task.task}</h2>
+                            key={task._id}
+                            className='md:w-[60%] w-[90%] p-3 px-9 rounded-2xl hover:bg-slate-700 bg-slate-800 border border-slate-700 flex items-center font-semibold justify-between'>
+                            <h2 className='text-xl'>{task.title}</h2>
                             <motion.button whileHover={{scale:1.08}} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer" onClick={() => TaskDelete(task.id)}>{<AiFillDelete />}</motion.button>
                         </motion.div>
                     )
