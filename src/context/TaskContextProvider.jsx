@@ -3,13 +3,12 @@ import { TaskContext } from './TaskContext'
 
 
 const TaskContextProvider = ({ children }) => {
-    const [tasks, setTasks] = useState(() => {
-        const stored = localStorage.getItem("tasks")
-        return stored ? JSON.parse(stored) : []
-    })
+    const [tasks, setTasks] = useState([])
 
     useEffect(() => {
-        localStorage.setItem("tasks", JSON.stringify(tasks))
+        fetch("http://localhost:3000/api/tasks/alltasks")
+        .then((res)=>res.json())
+        .then((data)=>setTasks(data.tasks))
     }, [tasks])
 
     return (

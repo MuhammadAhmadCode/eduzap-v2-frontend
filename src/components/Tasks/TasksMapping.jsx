@@ -20,7 +20,7 @@ const TasksMapping = () => {
   const handleCheckBox = (e) => {
     let id = e.target.name
     let index = tasks.findIndex((task) => {
-      return task.id == id
+      return task._id == id
     })
 
     let newTasks = [...tasks]
@@ -31,18 +31,15 @@ const TasksMapping = () => {
 
   const TaskEdit = (id) => {
     const task = tasks.find((item) => {
-      return item.id == id
+      return item._id == id
     })
-    setEdit(task.task)
+    setEdit(task.title)
     setEditingId(id)
   }
 
-  const TaskDelete = (id) => {
-    const c = confirm("Do you really want to delete the task?")
-    if (c) {
-      const newTasks = tasks.filter((task) => task.id !== id)
-      setTasks(newTasks)
-    }
+  const handleSave = async(id) => {
+    // await fetch(`http://localhost:3000/api/tasks/updatetask/${id}`,{ method: "PATCH", headers: { "Content-Type": "application/json"},body:edit})
+    setEditingId(null)
   }
 
   const handleCancel = () => {
@@ -50,16 +47,14 @@ const TasksMapping = () => {
     setEditingId(null)
   }
 
-
-
-  const handleSave = (id) => {
-    setTasks(tasks.map((item) =>
-      item.id == id ? { ...item, task: edit } : item
-    ))
-
-    setEditingId(null)
+  const TaskDelete = async (id) => {
+    const c = confirm("Do you really want to delete the task?")
+    if (c) {
+      await fetch(`http://localhost:3000/api/tasks/deltetask/${id}`,{ method: "DELETE", headers: { "Content-Type": "application/json" }})
+    }
   }
 
+  
   const handleKeyDownSave = (e, id) => {
     if (e.key === "Enter" && edit.trim().length > 3) {
       handleSave(id)
@@ -82,29 +77,29 @@ const TasksMapping = () => {
 
       {tasks.map((task) => {
         return (showCompleted || !task.completed) && (
-          <motion.div whileHover={{scale:1.04}} key={task.id} className='bg-[#191928] hover:bg-[#212131] hover:shadow hover:shadow-gray-600 shadow shadow-gray-500 border border-slate-800 flex items-center flex-wrap gap-3 md:flex-nowrap justify-between p-3  rounded-2xl text-white'>
+          <motion.div whileHover={{ scale: 1.04 }} key={task._id} className='bg-[#191928] hover:bg-[#212131] hover:shadow hover:shadow-gray-600 shadow shadow-gray-500 border border-slate-800 flex items-center flex-wrap gap-3 md:flex-nowrap justify-between p-3  rounded-2xl text-white'>
 
             <div className='flex gap-3 justify-center items-center'>
 
-              <input checked={task.completed} onChange={handleCheckBox} type="checkbox" name={task.id} />
+              <input checked={task.completed} onChange={handleCheckBox} type="checkbox" name={task._id} />
 
-              {editingID == task.id && <input onKeyDown={(e) => handleKeyDownSave(e, task.id)} className='text-lg w-full outline-none font-bold"' value={edit} onChange={(e) => setEdit(e.target.value)} type='text' />}
+              {editingID == task._id && <input onKeyDown={(e) => handleKeyDownSave(e, task._id)} className='text-lg w-full outline-none font-bold"' value={edit} onChange={(e) => setEdit(e.target.value)} type='text' />}
 
-              {editingID !== task.id && <div className={task.completed ? "line-through flex items-center md:gap-2 gap-1 text-wrap text-lg font-semibold" : "text-lg font-semibold text-wrap"}>{task.task}{task.completed ? <GiThumbUp className='md:text-2xl text-xl' /> : ""}</div>}
+              {editingID !== task._id && <div className={task.completed ? "line-through flex items-center md:gap-2 gap-1 text-wrap text-lg font-semibold" : "text-lg font-semibold text-wrap"}>{task.title}{task.completed ? <GiThumbUp className='md:text-2xl text-xl' /> : ""}</div>}
 
             </div>
 
             <div className='flex gap-3'>
-              {editingID !== task.id && <motion.button whileHover={{scale:1.04}} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer" onClick={() => TaskEdit(task.id)}>{<FaEdit />}</motion.button>}
+              {editingID !== task._id && <motion.button whileHover={{ scale: 1.04 }} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer" onClick={() => TaskEdit(task._id)}>{<FaEdit />}</motion.button>}
 
-              {editingID !== task.id && <motion.button whileHover={{scale:1.04}} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer" onClick={() => TaskDelete(task.id)}>{<AiFillDelete />}</motion.button>}
+              {editingID !== task._id && <motion.button whileHover={{ scale: 1.04 }} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer" onClick={() => TaskDelete(task._id)}>{<AiFillDelete />}</motion.button>}
 
-              {editingID == task.id && <motion.button whileHover={{scale:1.04}} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer" onClick={() => handleCancel(task.id)}>{<GiCancel />}</motion.button>}
+              {editingID == task._id && <motion.button whileHover={{ scale: 1.04 }} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer" onClick={() => handleCancel(task._id)}>{<GiCancel />}</motion.button>}
 
-              {editingID == task.id && <motion.button whileHover={{scale:1.04}} disabled={edit.trim().length <= 4} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer" onClick={() => handleSave(task.id)}>{<BiSave />}</motion.button>}
-              <motion.button whileHover={{scale:1.04}} onClick={() => {
+              {editingID == task._id && <motion.button whileHover={{ scale: 1.04 }} disabled={edit.trim().length <= 4} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer" onClick={() => handleSave(task._id)}>{<BiSave />}</motion.button>}
+              <motion.button whileHover={{ scale: 1.04 }} onClick={() => {
                 alert("Task Copied")
-                return navigator.clipboard.writeText(task.task)
+                return navigator.clipboard.writeText(task.title)
               }} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer">{<BiCopy />}</motion.button>
             </div>
 

@@ -1,6 +1,5 @@
 import { useState, useContext } from 'react'
 import { TaskContext } from '../../context/TaskContext'
-import { v4 as uuidv4 } from 'uuid';
 import { motion } from 'motion/react';
 
 const TaskAddition = ({ title = "Add Your Tasks", style, animate=false }) => {
@@ -9,7 +8,7 @@ const TaskAddition = ({ title = "Add Your Tasks", style, animate=false }) => {
     const [task, setTask] = useState("")
 
     const handleAdd = () => {
-        setTasks([...tasks, { id: uuidv4(), task, completed: false, date: Date.now() }])
+        setTasks([...tasks, {task, completed: false}])
         setTask("")
     }
 
