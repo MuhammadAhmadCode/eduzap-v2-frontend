@@ -4,7 +4,7 @@ import { AiFillDelete } from 'react-icons/ai';
 import { BiCopy, BiSave } from 'react-icons/bi';
 import { FaEdit } from 'react-icons/fa';
 import { GiCancel, GiThumbUp } from 'react-icons/gi';
-import { complex, motion } from 'motion/react';
+import { motion } from 'motion/react';
 
 
 
@@ -15,7 +15,7 @@ const TasksMapping = () => {
   const [editingID, setEditingId] = useState(null)
   const [edit, setEdit] = useState("")
   const [showCompleted, setShowCompleted] = useState(true)
-  const { tasks, setTasks } = useContext(TaskContext);
+  const { tasks } = useContext(TaskContext);
   const [taskCompleted,setTaskCompleted] = useState(false)
 
   const handleCheckBox = async(e) => {

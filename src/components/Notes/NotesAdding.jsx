@@ -8,8 +8,10 @@ const NotesAdding = () => {
     const [noteDescription, setNoteDescription] = useState("")
     const {notes,setNotes} = useContext(NotesContext)
 
-    const handleAdd = ()=>{
-        setNotes([...notes,{title,noteDescription,id:uuidv4()}])
+    const handleAdd = async() => {
+        await fetch("http://localhost:3000/api/notes/create-note", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title: title, description: noteDescription}) })
+        .then((responce)=>responce.json())
+        .then((rs)=>console.log(rs))
         setTitle("")
         setNoteDescription("")
     }

@@ -8,7 +8,7 @@ import { motion } from "motion/react";
 
 
 const NotesMapping = () => {
-    const { notes, setNotes,filterText,setFilterText } = useContext(NotesContext)
+    const { notes,filterText,setFilterText } = useContext(NotesContext)
 
 
     const [editTitle, setEditTitle] = useState("")
@@ -18,30 +18,30 @@ const NotesMapping = () => {
 
     const displayNotes = filterText.length > 0 ? notes.filter((note)=>note.title.toLowerCase().includes(filterText.toLowerCase())) : notes
 
-    const handleDelete = (id) => {
-        const c = confirm("Do you really want to delete the Note?")
+    const handleDelete = async (id) => {
+        const c = confirm("Do you really want to delete the task?")
         if (c) {
-            const newNotes = notes.filter((note) => note.id !== id)
-            setNotes(newNotes)
+          await fetch(`http://localhost:3000/api/notes/deletenote/${id}`,{ method: "DELETE", headers: { "Content-Type": "application/json" }})
         }
-    }
+      }
 
-    const handleEdit = (id) => {
-        const item = notes.filter((note) => note.id == id)
-        setEditTitle(item[0].title)
-        setEditDescription(item[0].noteDescription)
+      const handleEdit = (id) => {
+        const note = notes.find((note) => {
+          return note._id == id
+        })
+        setEditTitle(note.title)
+        setEditDescription(note.description)
+
         setEditingId(id)
-    }
+      }
+
+      const handleSave = async(id) => {
+        await fetch(`http://localhost:3000/api/notes/updatenote/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({title:editTitle,description:editDescription}) })
+        setEditingId(null)
+      }
+
 
     const handleCancel = () => {
-        setEditingId(null)
-    }
-
-    const handleSave = (id) => {
-        setNotes(notes.map((item) => {
-            return item.id == id ? { ...item, title: editTitle, noteDescription: editDescription } : item
-        }))
-
         setEditingId(null)
     }
 
@@ -60,21 +60,21 @@ const NotesMapping = () => {
 
                 {displayNotes.map((note) => {
                     return (
-                        <motion.div whileHover={{scale:1.05}} drag dragConstraints={{left:0,right:0,top:0,bottom:0}} key={note.id} className="bg-[#141d34] rounded-2xl shadow-md hover:bg-slate-800 transition shadow-black hover:shadow-lg hover:shadow-black/85 flex items-center flex-col justify-between gap-14 w-[95%] p-3">
+                        <motion.div whileHover={{scale:1.05}} drag dragConstraints={{left:0,right:0,top:0,bottom:0}} key={note._id} className="bg-[#141d34] rounded-2xl shadow-md hover:bg-slate-800 transition shadow-black hover:shadow-lg hover:shadow-black/85 flex items-center flex-col justify-between gap-14 min-w-[95%] p-3">
                             <div className="flex flex-col gap-3">
-                                {editingId !== note.id && <h3 className="text-2xl">{note.title}</h3>}
-                                {editingId !== note.id && <p className="text-sm">{note.noteDescription}</p>}
-                                {editingId == note.id && <input className={`${note.noteDescription.length > 20 ? "py-4" : ""} outline-none text-xl`} placeholder="Enter Edit Title" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} type="text" />}
-                                {editingId == note.id && <input className="outline-none text-sm" placeholder="Enter Edit Description" value={editDescription} onChange={(e) => setEditDescription(e.target.value)} type="text" />}
+                                {editingId !== note._id && <h3 className="text-2xl">{note.title}</h3>}
+                                {editingId !== note._id && <p className="text-sm">{note.description}</p>}
+                                {editingId == note._id && <input className={`${note.description.length > 20 ? "py-4" : ""} outline-none text-xl`} placeholder="Enter Edit Title" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} type="text" />}
+                                {editingId == note._id && <input className="outline-none text-sm" placeholder="Enter Edit Description" value={editDescription} onChange={(e) => setEditDescription(e.target.value)} type="text" />}
                             </div>
                             <div className="flex gap-2">
-                                {note.id !== editingId && <motion.button whileHover={{scale:1.1}} onClick={() => handleEdit(note.id)} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer">{<FaEdit />}</motion.button>}
-                                {note.id !== editingId && <motion.button whileHover={{scale:1.1}} onClick={() => handleDelete(note.id)} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer">{<AiFillDelete />}</motion.button>}
-                                {note.id == editingId && <motion.button whileHover={{scale:1.1}} onClick={() => handleSave(note.id)} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer">{<BiSave />}</motion.button>}
-                                {note.id == editingId && <motion.button whileHover={{scale:1.1}} onClick={handleCancel} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer">{<GiCancel />}</motion.button>}
+                                {note._id !== editingId && <motion.button whileHover={{scale:1.1}} onClick={() => handleEdit(note._id)} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer">{<FaEdit />}</motion.button>}
+                                {note._id !== editingId && <motion.button whileHover={{scale:1.1}} onClick={() => handleDelete(note._id)} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer">{<AiFillDelete />}</motion.button>}
+                                {note._id == editingId && <motion.button whileHover={{scale:1.1}} onClick={() => handleSave(note._id)} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer">{<BiSave />}</motion.button>}
+                                {note._id == editingId && <motion.button whileHover={{scale:1.1}} onClick={handleCancel} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer">{<GiCancel />}</motion.button>}
                                 <motion.button whileHover={{scale:1.1}} onClick={() => {
                                     alert("Description Copied")
-                                    return navigator.clipboard.writeText(note.noteDescription)
+                                    return navigator.clipboard.writeText(note.description)
                                 }} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer">{<BiCopy />}</motion.button>
                             </div>
                         </motion.div>

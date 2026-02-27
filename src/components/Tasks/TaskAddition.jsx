@@ -11,7 +11,6 @@ const TaskAddition = ({ title = "Add Your Tasks", style, animate=false }) => {
         await fetch("http://localhost:3000/api/tasks/create-task", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title: task, completed: false}) })
         .then((responce)=>responce.json())
         .then((rs)=>console.log(rs))
-        setTasks([...tasks, {task, completed: false}])
         setTask("")
     }
 
