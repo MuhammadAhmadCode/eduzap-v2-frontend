@@ -8,19 +8,12 @@ import LatestTasks from '../components/Dashboard/LatestTasks'
 
 
 const Dashboard = () => {
-  const { tasks, setTasks } = useContext(TaskContext)
+  const { tasks } = useContext(TaskContext)
 
   const totalTasks = tasks.length
   const CompletedTasks = tasks.filter((task) => task.completed).length
   const pendingTasks = totalTasks - CompletedTasks
 
-  const TaskDelete = (id) => {
-    const c = confirm("Do you really want to delete the task?")
-    if (c) {
-      const newTasks = tasks.filter((task) => task.id !== id)
-      setTasks(newTasks)
-    }
-  }
 
   return (
     <>
