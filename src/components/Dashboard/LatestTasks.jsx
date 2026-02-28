@@ -30,7 +30,7 @@ const LatestTasks = () => {
                             key={task._id}
                             className='md:w-[60%] w-[90%] p-3 px-9 rounded-2xl hover:bg-slate-700 bg-slate-800 border border-slate-700 flex items-center font-semibold justify-between'>
                             <h2 className='text-xl'>{task.title}</h2>
-                            <motion.button whileHover={{scale:1.08}} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer" onClick={() => TaskDelete(task.id)}>{<AiFillDelete />}</motion.button>
+                            <motion.button whileHover={{scale:1.08}} className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer" onClick={() => TaskDelete(task._id)}>{<AiFillDelete />}</motion.button>
                         </motion.div>
                     )
                 })}
