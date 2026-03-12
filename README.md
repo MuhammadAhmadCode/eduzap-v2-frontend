@@ -49,15 +49,17 @@ Frontend for **EduZap v2**, a modern task and notes management platform. This ve
 ## 📸 Screenshots
 
 **Dashboard**
-![Dashboard](https://via.placeholder.com/600x300?text=Dashboard+Preview)
+
+![Dashboard](public/images/dashboard_page.png)
 
 **Tasks Page**
-![Tasks Page](https://via.placeholder.com/600x300?text=Tasks+Page+Preview)
+
+![Notes Page](public/images/tasks_page.png)
 
 **Notes Page**
-![Notes Page](https://via.placeholder.com/600x300?text=Notes+Page+Preview)
 
-> Replace placeholders with your real screenshots for a polished look.
+![Tasks Page](public/images/notes_page.png)
+
 
 ---
 
@@ -66,7 +68,7 @@ Frontend for **EduZap v2**, a modern task and notes management platform. This ve
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/YOUR-USERNAME/eduzap-v2-frontend.git
+   git clone https://github.com/MuhammadAhmadCode/eduzap-v2-frontend.git
    ```
 2. Install dependencies:
 
@@ -76,7 +78,7 @@ Frontend for **EduZap v2**, a modern task and notes management platform. This ve
 3. Start the development server:
 
    ```bash
-   npm start
+   npm run dev
    ```
 
 ---
