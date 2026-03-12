@@ -1,67 +1,90 @@
-# 🚀 EduZap
+# EduZap v2 Frontend ✨
 
-**EduZap** is a **student productivity web application** built with **React, Vite, and TailwindCSS**.  
-It helps students manage tasks and organize notes in one clean, responsive interface.  
+[![React](https://img.shields.io/badge/React-17.0.2-blue?logo=react\&logoColor=white)](https://reactjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.3.2-teal?logo=tailwind-css\&logoColor=white)](https://tailwindcss.com/)
+[![Axios](https://img.shields.io/badge/Axios-0.27.2-lightgrey?logo=axios\&logoColor=white)](https://axios-http.com/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
----
+Frontend for **EduZap v2**, a modern task and notes management platform. This version introduces **authentication**, a **dashboard** for tasks, and dedicated pages for **notes** and **tasks**.
 
-## 🎯 Features (v1 - In Progress)
-
-- ✅ **Tasks Management**
-  - Add, edit, delete tasks
-  - Mark tasks as completed
-  - Task priority (Low / Medium / High)
-- 📊 **Dashboard Overview**
-  - Total tasks, completed tasks, pending tasks
-  - Quick preview of today’s tasks
-  - Quick Add Task functionality
-- 🗒️ **Notes**
-  - Create, edit, delete notes
-  - Simple search functionality
-- 💾 **Data Persistence**
-  - Tasks and notes saved in **LocalStorage**
-- 🌐 **Global State**
-  - Managed with **Context API** for consistent updates across pages
+🎯 **Live Demo (v1)**: [EduZap v1](https://edu-zap-one.vercel.app/)
+*(v2 deployment coming soon!)*
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Features
 
-- ⚛️ **React**  
-- ⚡ **Vite**  
-- 🎨 **TailwindCSS**  
-- 🧭 **React Router**  
-- 🔄 **Context API**  
+* **Authentication** 🔒
+
+  * User registration and login
+  * Protected routes for secure access
+
+* **Dashboard** 📊
+
+  * Task stats: completed ✅, pending ⏳, all tasks 📋
+  * Quick-add new tasks ➕
+  * View your **3 most recent tasks**
+
+* **Tasks Page** 📝
+
+  * Create, view, update, delete tasks
+
+* **Notes Page** 🗒️
+
+  * Add, view, and manage personal notes
 
 ---
 
-## 📌 Project Status
+## 🛠 Tech Stack
 
-- Version 1: Tasks functionality implemented ✅  
-- Dashboard and Notes pages in progress  
-- Version 2.0 planned: Habits & streak tracking 🔥  
+| Technology                                                                                              | Description             |
+| ------------------------------------------------------------------------------------------------------- | ----------------------- |
+| ![React](https://img.shields.io/badge/React-17.0.2-blue?logo=react\&logoColor=white)                    | Frontend library        |
+| ![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.3.2-teal?logo=tailwind-css\&logoColor=white) | Styling framework       |
+| ![Axios](https://img.shields.io/badge/Axios-0.27.2-lightgrey?logo=axios\&logoColor=white)               | API requests            |
+| React Context API                                                                                       | Global state management |
 
 ---
 
+## 📸 Screenshots
 
+**Dashboard**
+![Dashboard](https://via.placeholder.com/600x300?text=Dashboard+Preview)
 
-## ⚡ How to Run
+**Tasks Page**
+![Tasks Page](https://via.placeholder.com/600x300?text=Tasks+Page+Preview)
 
-```bash
-npm install
-npm run dev
-```
+**Notes Page**
+![Notes Page](https://via.placeholder.com/600x300?text=Notes+Page+Preview)
 
+> Replace placeholders with your real screenshots for a polished look.
 
-Open http://localhost:5173 in your browser.
-#### 💡 Future Plans (v2.0)
+---
 
-- Habit tracking with streaks
+## ⚡ Getting Started
 
-- More advanced filtering and sorting
+1. Clone the repository:
 
-- Improved dashboard stats
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/eduzap-v2-frontend.git
+   ```
+2. Install dependencies:
 
-- Export notes to PDF
+   ```bash
+   npm install
+   ```
+3. Start the development server:
 
-### Made with ❤️ by Muhammad Ahmad
+   ```bash
+   npm start
+   ```
+
+---
+
+## 🔗 Backend
+
+The backend API is hosted separately and manages authentication, tasks, and notes. Ensure it’s running for full functionality.
+
+---
+
+## 📝 License
