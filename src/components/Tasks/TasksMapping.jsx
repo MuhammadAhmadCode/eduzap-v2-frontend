@@ -5,6 +5,7 @@ import { BiCopy, BiSave } from 'react-icons/bi';
 import { FaEdit } from 'react-icons/fa';
 import { GiCancel, GiThumbUp } from 'react-icons/gi';
 import { motion } from 'motion/react';
+import axios from 'axios';
 
 
 
@@ -21,17 +22,8 @@ const TasksMapping = () => {
   const handleCheckBox = async(e) => {
     let id = e.target.name
     setTaskCompleted(!taskCompleted)
-    await fetch(`http://localhost:3000/api/tasks/updateTaskCompleted/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({completed: taskCompleted}) })
-
-    // let index = tasks.findIndex((task) => {
-    //   return task._id == id
-    // })
-
-    // let newTasks = [...tasks]
-    // newTasks[index].completed = !newTasks[index].completed
-    // setTasks(newTasks)
+    await axios.patch(`http://localhost:3000/api/tasks/updateTaskCompleted/${id}`,{completed: taskCompleted},{withCredentials:true})
   }
-
 
   const TaskEdit = (id) => {
     const task = tasks.find((item) => {
@@ -42,7 +34,7 @@ const TasksMapping = () => {
   }
 
   const handleSave = async(id) => {
-    await fetch(`http://localhost:3000/api/tasks/updatetask/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({edit:edit}) })
+    await axios.patch(`http://localhost:3000/api/tasks/updatetask/${id}`,{edit:edit},{withCredentials:true})
     setEditingId(null)
   }
 
