@@ -32,6 +32,7 @@ Frontend for **EduZap v2**, a modern task and notes management platform. This ve
 * **Notes Page** 🗒️
 
   * Add, view, and manage personal notes
+  * Search Functionality by title
 
 ---
 
@@ -90,3 +91,4 @@ The backend API is hosted separately and manages authentication, tasks, and note
 ---
 
 ## 📝 License
+MIT © M. Ahmad
