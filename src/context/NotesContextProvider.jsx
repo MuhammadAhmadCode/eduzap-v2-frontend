@@ -1,16 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { NotesContext } from './NotesContext'
+import AuthContext from './AuthContext'
+import axios from 'axios'
 
 const NotesContextProvider = ({ children }) => {
     const[filterText,setFilterText] = useState("")
 
+    const {user} = useContext(AuthContext)
+
     const [notes, setNotes] = useState([])
     
     useEffect(() => {
-        fetch("http://localhost:3000/api/notes/allnotes")
-        .then((res)=>res.json())
-        .then((data)=>setNotes(data.notes))
-    }, [notes])
+        if(!user) return
+        const fetchNotes = async()=>{
+            try {
+                const res = await axios.get("http://localhost:3000/api/notes/allnotes",{withCredentials:true})
+                console.log(res)
+            } catch (err) {
+                console.log(err)
+
+            }
+        }
+    }, [user,notes])
     
     return (
         <NotesContext.Provider value={{notes,setNotes,filterText,setFilterText}}>
