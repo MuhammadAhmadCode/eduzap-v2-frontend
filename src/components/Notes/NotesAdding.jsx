@@ -1,6 +1,6 @@
 import React, { useState,useContext } from 'react'
 import { NotesContext } from '../../context/NotesContext'
-import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 
 const NotesAdding = () => {
@@ -9,9 +9,7 @@ const NotesAdding = () => {
     const {notes,setNotes} = useContext(NotesContext)
 
     const handleAdd = async() => {
-        await fetch("http://localhost:3000/api/notes/create-note", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title: title, description: noteDescription}) })
-        .then((responce)=>responce.json())
-        .then((rs)=>console.log(rs))
+        await axios.post("http://localhost:3000/api/notes/create-note",{ title: title, description: noteDescription},{withCredentials:true})
         setTitle("")
         setNoteDescription("")
     }

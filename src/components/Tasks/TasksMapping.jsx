@@ -46,7 +46,7 @@ const TasksMapping = () => {
   const TaskDelete = async (id) => {
     const c = confirm("Do you really want to delete the task?")
     if (c) {
-      await fetch(`http://localhost:3000/api/tasks/deltetask/${id}`,{ method: "DELETE", headers: { "Content-Type": "application/json" }})
+      await axios.delete(`http://localhost:3000/api/tasks/deltetask/${id}`,{withCredentials:true})
     }
   }
 

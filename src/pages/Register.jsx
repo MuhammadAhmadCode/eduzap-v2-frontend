@@ -1,23 +1,26 @@
 import axios from 'axios'
 import { motion } from 'framer-motion'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import AuthContext from '../context/AuthContext'
 
 const Register = () => {
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const{user,setUser}  = useContext(AuthContext)
 
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(
+      const res = await axios.post(
         "http://localhost:3000/api/auth/user/register",
         { fullName, email, password },
         { withCredentials: true }
       )
+      setUser(res.data)
       navigate("/")
     } catch (err) {
       console.error(err)

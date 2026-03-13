@@ -8,7 +8,7 @@ const TaskAddition = ({ title = "Add Your Tasks", style, animate=false }) => {
     const [task, setTask] = useState("")
 
     const handleAdd = async() => {
-        const res = await axios.post("http://localhost:3000/api/tasks/create-task",{ title: task, completed: false},{withCredentials:true})
+        await axios.post("http://localhost:3000/api/tasks/create-task",{ title: task, completed: false},{withCredentials:true})
         setTask("")
     }
 

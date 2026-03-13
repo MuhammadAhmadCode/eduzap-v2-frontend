@@ -15,12 +15,14 @@ const NotesContextProvider = ({ children }) => {
         const fetchNotes = async()=>{
             try {
                 const res = await axios.get("http://localhost:3000/api/notes/allnotes",{withCredentials:true})
-                console.log(res)
+                setNotes(res.data.notes)
             } catch (err) {
                 console.log(err)
 
             }
         }
+
+        fetchNotes()
     }, [user,notes])
     
     return (

@@ -1,31 +1,56 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from "react-router-dom"
 
-import Register from '../pages/Register'
-import Dashboard from '../pages/Dashboard'
-import ProtectedRoute from '../components/ProtectedRoute'
-import LoginPage from '../pages/Login'
-import Notes from '../pages/Notes'
-import Tasks from '../pages/Tasks'
+import MainLayout from "../layouts/MainLayout"
+import ProtectedRoute from "../components/ProtectedRoute"
+
+import Dashboard from "../pages/Dashboard"
+import Tasks from "../pages/Tasks"
+import Notes from "../pages/Notes"
+import Login from "../pages/Login"
+import Register from "../pages/Register"
 
 const AppRoutes = () => {
-    return (
-        <Router>
-            <Routes>
+  return (
+    <Routes>
 
-                    <Route path='/' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                    <Route path='/tasks' element={<ProtectedRoute><Tasks /></ProtectedRoute>} />
-                    <Route path='/notes' element={<ProtectedRoute><Notes /></ProtectedRoute>} />
-                    
-                <Route path='/register' element={<Register />} />
-                <Route path='/login' element={<LoginPage />}>
+      {/* Layout routes */}
+      <Route path="/" element={<MainLayout />}>
 
+        <Route
+          index
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
 
+        <Route
+          path="tasks"
+          element={
+            <ProtectedRoute>
+              <Tasks />
+            </ProtectedRoute>
+          }
+        />
 
-                </Route>
-            </Routes>
-        </Router>
-    )
+        <Route
+          path="notes"
+          element={
+            <ProtectedRoute>
+              <Notes />
+            </ProtectedRoute>
+          }
+        />
+
+      </Route>
+
+      {/* Public routes */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
+    </Routes>
+  )
 }
 
 export default AppRoutes

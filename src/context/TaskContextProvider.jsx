@@ -11,10 +11,13 @@ const TaskContextProvider = ({ children }) => {
     useEffect(() => {
         if(!user) return
         const fetchTasks = async()=>{
-            const res = await axios.get("http://localhost:3000/api/tasks/alltasks",{withCredentials:true})
-            setTasks(res.data.tasks)
+            try {
+                const res = await axios.get("http://localhost:3000/api/tasks/alltasks",{withCredentials:true})
+                setTasks(res.data.tasks)
+            } catch (error) {
+                console.log(error)
+            }
         }
-
         fetchTasks()
     }, [user,tasks])
 

@@ -3,10 +3,6 @@ import { TaskContext } from '../context/TaskContext'
 import TaskCard from '../components/Dashboard/TaskCard'
 import TaskAddition from '../components/Tasks/TaskAddition'
 import LatestTasks from '../components/Dashboard/LatestTasks'
-import Navbar from '../components/Navbar'
-
-
-
 
 const Dashboard = () => {
   const { tasks } = useContext(TaskContext)
@@ -19,7 +15,6 @@ const Dashboard = () => {
   return (
     <>
       <div className='mt-7 pb-6'>
-        <Navbar/>
         <h1 className='text-center text-white text-3xl font-bold'>Your Tasks Info</h1>
         <div className='text-white gap-6 mt-10 grid grid-cols-1 md:grid-cols-3 place-items-center'>
           <TaskCard value={totalTasks} color={"bg-blue-900"} title={"Total Tasks"} />
