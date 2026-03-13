@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Logo from "../assets/Logo.png"
 import githubLogo from '../assets/github-logo.png'
 import { Link, NavLink } from 'react-router-dom'
+import AuthContext from '../context/AuthContext'
+import axios from 'axios'
+import { motion } from 'motion/react'
 
 
 const Navbar = () => {
+
+    const { setUser } = useContext(AuthContext)
+
+    const handleLogOut = async () => {
+        await axios.get("http://localhost:3000/api/auth/user/logout", { withCredentials: true })
+        setUser(null)
+    }
+
     return (
         <nav className='flex text-white drop-shadow-sm drop-shadow-white  justify-around bg-slate-950 items-center p-2'>
 
@@ -29,19 +40,15 @@ const Navbar = () => {
                 </ul>
             </div>
 
-            <Link to="https://github.com/MuhammadAhmadCode/edu-zap" target='_blank'>
-
-                <div className='flex hover:bg-blue-800 md:hover:text-xl md:text-lg text-md hover:text-lg text-gray-100 hover:text-gray-200 transition-all bg-blue-950 gap-2 rounded-xl px-3 py-1 items-center'>
-
-                    <div className=''>
+            <div className='flex gap-3'>
+                <Link to="https://github.com/MuhammadAhmadCode/edu-zap" target='_blank' className='flex hover:bg-blue-800 md:hover:text-xl md:text-lg text-md hover:text-lg text-gray-100 hover:text-gray-200 transition-all bg-blue-950 cursor-pointer gap-2 rounded-xl px-3 py-1 items-center'>
+                    <div className='hidden md:block'>
                         GitHub
                     </div>
-
                     <img className='w-10' src={githubLogo} alt="" />
-
-                </div>
-            </Link>
-
+                </Link>
+                <motion.button whileHover={{scale:1.05}} onClick={handleLogOut} className='p-2 hover:bg-red-500 hover:font-semibold cursor-pointer bg-red-600 text-white rounded-2xl'>LogOut</motion.button>
+            </div>
         </nav>
     )
 }
