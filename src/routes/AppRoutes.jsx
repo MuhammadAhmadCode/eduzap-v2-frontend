@@ -1,21 +1,19 @@
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom";
 
-import MainLayout from "../layouts/MainLayout"
-import ProtectedRoute from "../components/ProtectedRoute"
+import MainLayout from "../layouts/MainLayout";
+import ProtectedRoute from "../components/ProtectedRoute";
 
-import Dashboard from "../pages/Dashboard"
-import Tasks from "../pages/Tasks"
-import Notes from "../pages/Notes"
-import Login from "../pages/Login"
-import Register from "../pages/Register"
+import Dashboard from "../pages/Dashboard";
+import Tasks from "../pages/Tasks";
+import Notes from "../pages/Notes";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 const AppRoutes = () => {
   return (
     <Routes>
-
       {/* Layout routes */}
       <Route path="/" element={<MainLayout />}>
-
         <Route
           index
           element={
@@ -42,15 +40,13 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
-
       </Route>
 
       {/* Public routes */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-
     </Routes>
-  )
-}
+  );
+};
 
-export default AppRoutes
+export default AppRoutes;
