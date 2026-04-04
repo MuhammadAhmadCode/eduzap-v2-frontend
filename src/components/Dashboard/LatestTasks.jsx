@@ -3,6 +3,7 @@ import { TaskContext } from "../../context/TaskContext";
 import { AiFillDelete } from "react-icons/ai";
 import { motion } from "motion/react";
 import axios from "axios";
+import { GiThumbUp } from "react-icons/gi";
 
 const LatestTasks = () => {
   const { tasks } = useContext(TaskContext);
@@ -37,7 +38,9 @@ const LatestTasks = () => {
               key={task._id}
               className="md:w-[60%] w-[90%] p-3 px-9 rounded-2xl hover:bg-slate-700 bg-slate-800 border border-slate-700 flex items-center font-semibold justify-between"
             >
-              <h2 className="text-xl">{task.title}</h2>
+              <div className="text-xl flex justify-center items-center gap-3">
+                {task.title} {task.completed ? <GiThumbUp /> : ""}
+              </div>
               <motion.button
                 whileHover={{ scale: 1.08 }}
                 className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer"
