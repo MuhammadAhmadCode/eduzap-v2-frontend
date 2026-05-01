@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { motion } from 'framer-motion'
+import { api, endpoints } from "../api/api";
+import { motion } from 'motion/react'
 import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
@@ -8,18 +8,15 @@ const Register = () => {
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const{user,setUser}  = useContext(AuthContext)
+  const{ setUser }  = useContext(AuthContext)
 
   const navigate = useNavigate()
+  const MotionForm = motion.form
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/auth/user/register",
-        { fullName, email, password },
-        { withCredentials: true }
-      )
+      const res = await api.post(endpoints.auth.register, { fullName, email, password });
       setUser(res.data)
       navigate("/")
     } catch (err) {
@@ -29,7 +26,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 p-4">
-      <motion.form
+      <MotionForm
         onSubmit={handleSubmit}
         whileHover={{ scale: 1.02 }}
         className="bg-slate-700 shadow-lg rounded-2xl md:w-1/3 w-full max-w-md p-8 flex flex-col gap-4"
@@ -85,7 +82,7 @@ const Register = () => {
           Already Have an accound?{" "}
           <Link className="text-indigo-400 font-medium hover:underline" to="/login">Sign In</Link>
         </p>
-      </motion.form>
+      </MotionForm>
     </div>
   )
 }

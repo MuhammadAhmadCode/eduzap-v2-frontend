@@ -1,14 +1,14 @@
 import { useState, useContext } from 'react'
 import { TaskContext } from '../../context/TaskContext'
 import { motion } from 'motion/react';
-import axios from 'axios';
+import { api, endpoints } from "../../api/api";
 
 const TaskAddition = ({ title = "Add Your Tasks", style, animate=false }) => {
 
     const [task, setTask] = useState("")
 
     const handleAdd = async() => {
-        await axios.post("http://localhost:3000/api/tasks/create-task",{ title: task, completed: false},{withCredentials:true})
+        await api.post(endpoints.tasks.createTask, { title: task, completed: false })
         setTask("")
     }
 

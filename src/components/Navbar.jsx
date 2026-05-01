@@ -3,7 +3,7 @@ import Logo from "../assets/Logo.png"
 import githubLogo from '../assets/github-logo.png'
 import { Link, NavLink } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
-import axios from 'axios'
+import { api, endpoints } from "../api/api";
 import { motion } from 'motion/react'
 
 
@@ -12,7 +12,7 @@ const Navbar = () => {
     const { setUser } = useContext(AuthContext)
 
     const handleLogOut = async () => {
-        await axios.get("http://localhost:3000/api/auth/user/logout", { withCredentials: true })
+        await api.get(endpoints.auth.logout)
         setUser(null)
     }
 

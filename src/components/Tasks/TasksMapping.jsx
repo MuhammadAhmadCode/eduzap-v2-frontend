@@ -5,7 +5,7 @@ import { BiCopy, BiSave } from "react-icons/bi";
 import { FaEdit } from "react-icons/fa";
 import { GiCancel, GiThumbUp } from "react-icons/gi";
 import { motion } from "motion/react";
-import axios from "axios";
+import { api, endpoints } from "../../api/api";
 
 const TasksMapping = () => {
   const [editingID, setEditingId] = useState(null);
@@ -17,11 +17,9 @@ const TasksMapping = () => {
   const handleCheckBox = async (e) => {
     let id = e.target.name;
     setTaskCompleted(!taskCompleted);
-    await axios.patch(
-      `http://localhost:3000/api/tasks/updateTaskCompleted/${id}`,
-      { completed: taskCompleted },
-      { withCredentials: true },
-    );
+    await api.patch(endpoints.tasks.updateTaskCompleted(id), {
+      completed: taskCompleted,
+    });
   };
 
   const TaskEdit = (id) => {
@@ -33,11 +31,7 @@ const TasksMapping = () => {
   };
 
   const handleSave = async (id) => {
-    await axios.patch(
-      `http://localhost:3000/api/tasks/updatetask/${id}`,
-      { edit: edit },
-      { withCredentials: true },
-    );
+    await api.patch(endpoints.tasks.updateTask(id), { edit: edit });
     setEditingId(null);
   };
 
@@ -49,9 +43,7 @@ const TasksMapping = () => {
   const TaskDelete = async (id) => {
     const c = confirm("Do you really want to delete the task?");
     if (c) {
-      await axios.delete(`http://localhost:3000/api/tasks/deltetask/${id}`, {
-        withCredentials: true,
-      });
+      await api.delete(endpoints.tasks.deleteTask(id));
     }
   };
 

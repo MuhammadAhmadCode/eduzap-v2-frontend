@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { NotesContext } from "./NotesContext";
 import AuthContext from "./AuthContext";
-import axios from "axios";
+import { api, endpoints } from "../api/api";
 
 const NotesContextProvider = ({ children }) => {
   const [filterText, setFilterText] = useState("");
@@ -14,10 +14,7 @@ const NotesContextProvider = ({ children }) => {
     if (!user) return;
     const fetchNotes = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:3000/api/notes/allnotes",
-          { withCredentials: true },
-        );
+        const res = await api.get(endpoints.notes.allNotes);
         setNotes(res.data.notes);
       } catch (err) {
         console.log(err);

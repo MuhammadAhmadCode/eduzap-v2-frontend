@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import { TaskContext } from "../../context/TaskContext";
 import { AiFillDelete } from "react-icons/ai";
-import { motion } from "motion/react";
-import axios from "axios";
+import { api, endpoints } from "../../api/api";
 import { GiThumbUp } from "react-icons/gi";
 
 const LatestTasks = () => {
@@ -11,9 +10,7 @@ const LatestTasks = () => {
   const TaskDelete = async (id) => {
     const c = confirm("Do you really want to delete the task?");
     if (c) {
-      await axios.delete(`http://localhost:3000/api/tasks/deltetask/${id}`, {
-        withCredentials: true,
-      });
+      await api.delete(endpoints.tasks.deleteTask(id));
     }
   };
 
@@ -31,7 +28,7 @@ const LatestTasks = () => {
         )}
         {tasks.slice(0, 3).map((task) => {
           return (
-            <motion.div
+            <div
               drag
               dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
               whileHover={{ scale: 1.03 }}
@@ -41,14 +38,14 @@ const LatestTasks = () => {
               <div className="text-xl flex justify-center items-center gap-3">
                 {task.title} {task.completed ? <GiThumbUp /> : ""}
               </div>
-              <motion.button
+              <button
                 whileHover={{ scale: 1.08 }}
                 className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer"
                 onClick={() => TaskDelete(task._id)}
               >
                 {<AiFillDelete />}
-              </motion.button>
-            </motion.div>
+              </button>
+            </div>
           );
         })}
       </div>

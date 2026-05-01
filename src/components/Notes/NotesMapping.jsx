@@ -5,7 +5,7 @@ import { BiCopy, BiSave, BiSearch } from "react-icons/bi";
 import { FaEdit } from "react-icons/fa";
 import { GiCancel } from "react-icons/gi";
 import { motion } from "motion/react";
-import axios from "axios";
+import { api, endpoints } from "../../api/api";
 
 const NotesMapping = () => {
   const { notes, filterText, setFilterText } = useContext(NotesContext);
@@ -25,9 +25,7 @@ const NotesMapping = () => {
   const handleDelete = async (id) => {
     const c = confirm("Do you really want to delete the task?");
     if (c) {
-      await axios.delete(`http://localhost:3000/api/notes/deletenote/${id}`, {
-        withCredentials: true,
-      });
+      await api.delete(endpoints.notes.deleteNote(id));
     }
   };
 
@@ -42,11 +40,10 @@ const NotesMapping = () => {
   };
 
   const handleSave = async (id) => {
-    await axios.patch(
-      `http://localhost:3000/api/notes/updatenote/${id}`,
-      { title: editTitle, description: editDescription },
-      { withCredentials: true },
-    );
+    await api.patch(endpoints.notes.updateNote(id), {
+      title: editTitle,
+      description: editDescription,
+    });
     setEditingId(null);
   };
 

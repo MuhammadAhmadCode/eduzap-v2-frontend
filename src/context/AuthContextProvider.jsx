@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import AuthContext from './AuthContext'
-import axios from 'axios'
+import { api, endpoints } from "../api/api";
 
 
 const AuthContextProvider = ({ children }) => {
@@ -11,7 +11,7 @@ const AuthContextProvider = ({ children }) => {
     useEffect(() => {
         const checkUser = async()=>{
             try {
-                const res = await axios.get("http://localhost:3000/api/auth/user/me",{withCredentials:true})
+                const res = await api.get(endpoints.auth.me)
 
                 setUser(res.data)
             } catch (err) {

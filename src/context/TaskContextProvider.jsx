@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { TaskContext } from "./TaskContext";
 import AuthContext from "./AuthContext";
-import axios from "axios";
+import { api, endpoints } from "../api/api";
 
 const TaskContextProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
@@ -11,10 +11,7 @@ const TaskContextProvider = ({ children }) => {
     if (!user) return;
     const fetchTasks = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:3000/api/tasks/alltasks",
-          { withCredentials: true },
-        );
+        const res = await api.get(endpoints.tasks.allTasks);
         setTasks(res.data.tasks);
       } catch (error) {
         console.log(error);
