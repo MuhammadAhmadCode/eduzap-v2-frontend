@@ -18,6 +18,7 @@ export const endpoints = {
     createTask: "/tasks/create-task",
     allTasks: "/tasks/alltasks",
     latest: "/tasks/latest",
+    stats: "/tasks/stats",
     deleteTask: (id) => `/tasks/deltetask/${id}`,
     updateTask: (id) => `/tasks/updatetask/${id}`,
     updateTaskCompleted: (id) => `/tasks/updateTaskCompleted/${id}`,
