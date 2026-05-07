@@ -3,6 +3,7 @@ import TaskCard from "../components/Dashboard/TaskCard";
 import TaskAddition from "../components/Tasks/TaskAddition";
 import LatestTasks from "../components/Dashboard/LatestTasks";
 import { api, endpoints } from "../api/api";
+import { motion } from "motion/react";
 
 const Dashboard = () => {
   const [totalTasks, settotalTasks] = useState(0);
@@ -50,7 +51,12 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950"
+      >
         {/* Header Section */}
         <div className="px-6 md:px-12 pt-8 pb-12">
           <div className="mb-8">
@@ -297,7 +303,7 @@ const Dashboard = () => {
         <div className="px-6 md:px-12 pb-12">
           <LatestTasks />
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

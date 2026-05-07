@@ -1,7 +1,9 @@
 import { api, endpoints } from "../api/api";
+import { motion } from "motion/react";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import LogoIcon from "../assets/LogoIcon";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -29,13 +31,39 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500">
-      <div className="bg-gray-700 text-white shadow-lg rounded-xl p-8 max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-6 text-center">Welcome Back</h2>
-        <div className="text-red-400 text-lg text-center">{status}</div>
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4 py-10">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(34,197,94,0.12),transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(56,189,248,0.12),transparent_30%)] pointer-events-none" />
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="relative w-full max-w-xl rounded-4xl border border-white/10 bg-black/50 backdrop-blur-xl shadow-2xl p-8 md:p-10 overflow-hidden"
+      >
+        <div className="flex flex-col items-center gap-4 mb-8 text-center">
+          <div className="flex items-center gap-3 justify-center">
+            <LogoIcon width={42} height={42} />
+            <div className="text-white text-2xl font-semibold tracking-tight">
+              Sign In
+            </div>
+          </div>
+          <p className="text-sm text-slate-400 max-w-md">
+            Secure access to your study workspace. Login to continue managing
+            tasks and notes in one place.
+          </p>
+        </div>
+
+        {status && (
+          <div className="mb-5 rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-center text-sm text-red-200">
+            {status}
+          </div>
+        )}
+
         <form onSubmit={handleLogin} className="space-y-5">
-          <div>
-            <label className="block mb-2" htmlFor="email">
+          <div className="space-y-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-slate-300"
+            >
               Email
             </label>
             <input
@@ -43,14 +71,17 @@ const LoginPage = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              placeholder="you@eduzap.com"
+              className="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-white outline-none transition focus:border-green-400 focus:ring-2 focus:ring-green-400/20"
               required
             />
           </div>
 
-          <div>
-            <label className="block mb-2" htmlFor="password">
+          <div className="space-y-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-slate-300"
+            >
               Password
             </label>
             <input
@@ -58,30 +89,30 @@ const LoginPage = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="********"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              placeholder="••••••••"
+              className="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-white outline-none transition focus:border-green-400 focus:ring-2 focus:ring-green-400/20"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full cursor-pointer bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+            className="w-full rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/20 transition hover:brightness-105"
           >
             Login
           </button>
         </form>
 
-        <p className="mt-6 text-center">
-          Don't have an account?{" "}
+        <p className="mt-6 text-center text-sm text-slate-400">
+          Don&apos;t have an account?{" "}
           <Link
             to="/register"
-            className="text-indigo-600 font-medium hover:underline"
+            className="font-semibold text-emerald-300 hover:text-emerald-200"
           >
             Sign Up
           </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };

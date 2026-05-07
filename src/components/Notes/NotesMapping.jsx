@@ -23,7 +23,7 @@ const NotesMapping = () => {
       : notes;
 
   const handleDelete = async (id) => {
-    const c = confirm("Do you really want to delete the task?");
+    const c = confirm("Do you really want to delete this note?");
     if (c) {
       await api.delete(endpoints.notes.deleteNote(id));
     }
@@ -51,113 +51,152 @@ const NotesMapping = () => {
     setEditingId(null);
   };
 
-  // const handleCopy = (text) => {
-  //     navigator.clipboard.writeText(text)
-  // }
-
   return (
-    <div className="w-[90%] md:w-1/2 items-center gap-3 flex flex-col mt-20 md:mt-0">
-      <h1 className="text-3xl text-center font-bold">Your Notes</h1>
-      <div className="text-white mt-5 w-full flex gap-5 justify-center items-center">
-        <input
-          value={filterText}
-          onChange={(e) => setFilterText(e.target.value)}
-          className="border-gray-600 text-sm font-semibold py-2  border rounded-2xl px-3  bg-gray-800/60 w-[50%]"
-          type="text"
-          placeholder="Search Notes by title"
-        />
-      </div>
-      <div className="ml-4 flex mt-7 justify-center flex-wrap gap-3">
-        {displayNotes.length === 0 && <div>No Notes to display</div>}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+      className="w-[90%] md:w-1/2 flex flex-col gap-6"
+    >
+      <div className="bg-slate-800/30 backdrop-blur-sm rounded-3xl p-6 border border-slate-700/50 shadow-2xl shadow-slate-900/50">
+        <h1 className="text-2xl font-bold text-white mb-6 text-center">
+          Your Notes
+        </h1>
 
-        {displayNotes.map((note) => {
-          return (
+        <div className="relative mb-6">
+          <BiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-lg" />
+          <input
+            value={filterText}
+            onChange={(e) => setFilterText(e.target.value)}
+            className="w-full bg-slate-900/60 border border-slate-600 rounded-xl py-3 pl-12 pr-4 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:bg-slate-800/60"
+            type="text"
+            placeholder="Search notes by title..."
+          />
+        </div>
+
+        <div className="space-y-4 max-h-[70vh] overflow-y-auto">
+          {displayNotes.length === 0 && (
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              drag
-              dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-              key={note._id}
-              className="bg-[#141d34] rounded-2xl shadow-md hover:bg-slate-800 transition shadow-black hover:shadow-lg hover:shadow-black/85 flex items-center flex-col justify-between gap-14 min-w-[95%] p-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-12 text-slate-400"
             >
-              <div className="flex flex-col gap-3">
-                {editingId !== note._id && (
-                  <h3 className="text-2xl">{note.title}</h3>
-                )}
-                {editingId !== note._id && (
-                  <p className="text-sm">{note.description}</p>
-                )}
-                {editingId == note._id && (
-                  <input
-                    className={`${note.description.length > 20 ? "py-4" : ""} outline-none text-xl`}
-                    placeholder="Enter Edit Title"
-                    value={editTitle}
-                    onChange={(e) => setEditTitle(e.target.value)}
-                    type="text"
-                  />
-                )}
-                {editingId == note._id && (
-                  <input
-                    className="outline-none text-sm"
-                    placeholder="Enter Edit Description"
-                    value={editDescription}
-                    onChange={(e) => setEditDescription(e.target.value)}
-                    type="text"
-                  />
-                )}
-              </div>
-              <div className="flex gap-2">
-                {note._id !== editingId && (
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    onClick={() => handleEdit(note._id)}
-                    className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer"
-                  >
-                    {<FaEdit />}
-                  </motion.button>
-                )}
-                {note._id !== editingId && (
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    onClick={() => handleDelete(note._id)}
-                    className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer"
-                  >
-                    {<AiFillDelete />}
-                  </motion.button>
-                )}
-                {note._id == editingId && (
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    onClick={() => handleSave(note._id)}
-                    className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer"
-                  >
-                    {<BiSave />}
-                  </motion.button>
-                )}
-                {note._id == editingId && (
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    onClick={handleCancel}
-                    className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer"
-                  >
-                    {<GiCancel />}
-                  </motion.button>
-                )}
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  onClick={() => {
-                    alert("Description Copied");
-                    return navigator.clipboard.writeText(note.description);
-                  }}
-                  className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer"
-                >
-                  {<BiCopy />}
-                </motion.button>
-              </div>
+              <div className="text-4xl mb-4">📝</div>
+              <p className="text-lg">No notes to display</p>
+              <p className="text-sm">Create your first note to get started!</p>
             </motion.div>
-          );
-        })}
+          )}
+
+          {displayNotes.map((note, index) => {
+            return (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                whileHover={{ scale: 1.02, y: -2 }}
+                key={note._id}
+                className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 rounded-2xl shadow-lg hover:shadow-xl hover:shadow-slate-900/50 border border-slate-700/50 p-6 transition-all duration-300 group"
+              >
+                <div className="flex flex-col gap-4">
+                  {editingId !== note._id && (
+                    <>
+                      <h3 className="text-xl font-bold text-white group-hover:text-blue-300 transition-colors duration-200">
+                        {note.title}
+                      </h3>
+                      <p className="text-slate-300 leading-relaxed">
+                        {note.description}
+                      </p>
+                    </>
+                  )}
+
+                  {editingId === note._id && (
+                    <div className="space-y-3">
+                      <input
+                        className="w-full bg-slate-900/80 border border-slate-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                        placeholder="Edit title"
+                        value={editTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                        type="text"
+                      />
+                      <textarea
+                        className="w-full bg-slate-900/80 border border-slate-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
+                        placeholder="Edit description"
+                        value={editDescription}
+                        onChange={(e) => setEditDescription(e.target.value)}
+                        rows="3"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex gap-2 mt-4 justify-end">
+                  {note._id !== editingId && (
+                    <>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => handleEdit(note._id)}
+                        className="p-2 bg-blue-600/20 hover:bg-blue-600/40 text-blue-400 hover:text-blue-300 rounded-lg transition-all duration-200 border border-blue-600/30"
+                        title="Edit note"
+                      >
+                        <FaEdit size={16} />
+                      </motion.button>
+
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => handleDelete(note._id)}
+                        className="p-2 bg-red-600/20 hover:bg-red-600/40 text-red-400 hover:text-red-300 rounded-lg transition-all duration-200 border border-red-600/30"
+                        title="Delete note"
+                      >
+                        <AiFillDelete size={16} />
+                      </motion.button>
+
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                          navigator.clipboard.writeText(note.description);
+                          // You could add a toast notification here
+                        }}
+                        className="p-2 bg-green-600/20 hover:bg-green-600/40 text-green-400 hover:text-green-300 rounded-lg transition-all duration-200 border border-green-600/30"
+                        title="Copy description"
+                      >
+                        <BiCopy size={16} />
+                      </motion.button>
+                    </>
+                  )}
+
+                  {note._id === editingId && (
+                    <>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => handleSave(note._id)}
+                        className="p-2 bg-green-600/20 hover:bg-green-600/40 text-green-400 hover:text-green-300 rounded-lg transition-all duration-200 border border-green-600/30"
+                        title="Save changes"
+                      >
+                        <BiSave size={16} />
+                      </motion.button>
+
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleCancel}
+                        className="p-2 bg-gray-600/20 hover:bg-gray-600/40 text-gray-400 hover:text-gray-300 rounded-lg transition-all duration-200 border border-gray-600/30"
+                        title="Cancel editing"
+                      >
+                        <GiCancel size={16} />
+                      </motion.button>
+                    </>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
