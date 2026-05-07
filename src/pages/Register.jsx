@@ -18,12 +18,17 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post(endpoints.auth.register, { fullName, email, password });
+      const res = await api.post(endpoints.auth.register, {
+        fullName,
+        email,
+        password,
+      });
       setUser(res.data);
       navigate("/");
-    } catch (err) {
-      console.error(err);
-      setStatus("Unable to register. Please try again.");
+    } catch (error) {
+      const errorMessage = error.response.data.errors[0].error;
+      console.error(errorMessage);
+      setStatus(errorMessage);
     }
   };
 
@@ -44,10 +49,13 @@ const Register = () => {
         <div className="flex flex-col items-center gap-3 mb-8 text-center">
           <div className="flex items-center gap-3 justify-center">
             <LogoIcon width={42} height={42} />
-            <div className="text-white text-2xl font-semibold tracking-tight">Create Account</div>
+            <div className="text-white text-2xl font-semibold tracking-tight">
+              Create Account
+            </div>
           </div>
           <p className="text-sm text-slate-400 max-w-md">
-            Join EduZap and organize your tasks, notes, and study flow in one modern workspace.
+            Join EduZap and organize your tasks, notes, and study flow in one
+            modern workspace.
           </p>
         </div>
 
@@ -103,8 +111,11 @@ const Register = () => {
         </button>
 
         <p className="mt-6 text-center text-sm text-slate-400">
-          Already have an account?{' '}
-          <Link className="font-semibold text-emerald-300 hover:text-emerald-200" to="/login">
+          Already have an account?{" "}
+          <Link
+            className="font-semibold text-emerald-300 hover:text-emerald-200"
+            to="/login"
+          >
             Sign In
           </Link>
         </p>

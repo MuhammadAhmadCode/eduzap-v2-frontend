@@ -18,15 +18,10 @@ const LoginPage = () => {
       const res = await api.post(endpoints.auth.login, { email, password });
       setUser(res.data);
       navigate("/");
-    } catch (err) {
-      console.error(err);
-      if (err.status === 400) {
-        setStatus("Invalid Email or Password!");
-      } else if (err.status === 500) {
-        setStatus("Internal Server Error, Try Again.");
-      } else {
-        setStatus("Something Went Wrong, Please try again later.");
-      }
+    } catch (error) {
+      const errorMessage = error.response.data.errors[0].error;
+      console.error(errorMessage);
+      setStatus(errorMessage);
     }
   };
 

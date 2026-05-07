@@ -27,7 +27,7 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
   const handleLogOut = async () => {
-    await api.get(endpoints.auth.logout);
+    await api.post(endpoints.auth.logout);
     setUser(null);
   };
   const NavLinks = [
