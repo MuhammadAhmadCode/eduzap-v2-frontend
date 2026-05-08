@@ -13,7 +13,7 @@ const TasksMapping = () => {
   const [showCompleted, setShowCompleted] = useState(true);
   const [query, setQuery] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("all");
-  const { tasks } = useContext(TaskContext);
+  const { tasks, setFilter, filter } = useContext(TaskContext);
   const handleCheckBox = async (e) => {
     const id = e.target.name;
     const completed = e.target.checked;
@@ -59,14 +59,29 @@ const TasksMapping = () => {
     if (!deadline) return "—";
     const d = new Date(deadline);
     if (Number.isNaN(d.getTime())) return "—";
-    return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "2-digit" });
+    return d.toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    });
   };
 
   const priorityMeta = (p) => {
     const v = (p || "medium").toLowerCase();
-    if (v === "high") return { label: "High", cls: "bg-rose-500/15 text-rose-300 border-rose-500/30" };
-    if (v === "low") return { label: "Low", cls: "bg-sky-500/15 text-sky-300 border-sky-500/30" };
-    return { label: "Medium", cls: "bg-amber-500/15 text-amber-300 border-amber-500/30" };
+    if (v === "high")
+      return {
+        label: "High",
+        cls: "bg-rose-500/15 text-rose-300 border-rose-500/30",
+      };
+    if (v === "low")
+      return {
+        label: "Low",
+        cls: "bg-sky-500/15 text-sky-300 border-sky-500/30",
+      };
+    return {
+      label: "Medium",
+      cls: "bg-amber-500/15 text-amber-300 border-amber-500/30",
+    };
   };
 
   const filtered = useMemo(() => {
@@ -103,6 +118,15 @@ const TasksMapping = () => {
               type="text"
             />
 
+            <select
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="border border-slate-700 bg-slate-950/40 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500/50"
+            >
+              <option value="all">All Tasks</option>
+              <option value="today">Today's Tasks</option>
+              <option value="weekly">Weekly's Tasks</option>
+            </select>
             <select
               value={priorityFilter}
               onChange={(e) => setPriorityFilter(e.target.value)}
@@ -194,7 +218,9 @@ const TasksMapping = () => {
                         )}
                       </span>
 
-                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${p.cls}`}>
+                      <span
+                        className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${p.cls}`}
+                      >
                         Priority: {p.label}
                       </span>
 

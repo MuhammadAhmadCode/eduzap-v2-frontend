@@ -93,9 +93,9 @@ const NotesMapping = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02, y: -2 }}
+                whileHover={{ scale: 1.002, y: -2 }}
                 key={note._id}
-                className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 rounded-2xl shadow-lg hover:shadow-xl hover:shadow-slate-900/50 border border-slate-700/50 p-6 transition-all duration-300 group"
+                className="bg-linear-to-br from-slate-800/60 to-slate-900/60 rounded-2xl shadow-lg hover:shadow-xl hover:shadow-slate-900/50 border border-slate-700/50 p-6 transition-all duration-300 group"
               >
                 <div className="flex flex-col gap-4">
                   {editingId !== note._id && (

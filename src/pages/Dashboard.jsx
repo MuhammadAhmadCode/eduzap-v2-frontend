@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TaskCard from "../components/Dashboard/TaskCard";
 import TaskAddition from "../components/Tasks/TaskAddition";
 import LatestTasks from "../components/Dashboard/LatestTasks";
@@ -8,8 +8,10 @@ import TasksCreatedToday from "../components/Dashboard/TasksCreatedToday";
 import TasksCompletedToday from "../components/Dashboard/TasksCompletedToday";
 import OverdueTasks from "../components/Dashboard/OverdueTasks";
 import HighPriorityTasks from "../components/Dashboard/HighPriorityTasks";
+import { TaskContext } from "../context/TaskContext";
 
 const Dashboard = () => {
+  const { tasks } = useContext(TaskContext);
   const [totalTasks, settotalTasks] = useState(0);
   const [CompletedTasks, setCompletedTasks] = useState(0);
   const [pendingTasks, setpendingTasks] = useState(0);
@@ -53,7 +55,7 @@ const Dashboard = () => {
       setTasksCreatedToday(stats.data.stats.tasksCreatedToday ?? []);
     };
     fetchStats();
-  }, []);
+  }, [tasks]);
 
   return (
     <>

@@ -7,7 +7,7 @@ const Tasks = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950"
+      className="min-h-screen"
     >
       <div className="max-w-6xl mx-auto px-5 md:px-10 py-10">
         <div className="mb-8 flex items-end justify-between gap-4 flex-wrap">
