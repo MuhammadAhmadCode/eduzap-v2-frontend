@@ -3,7 +3,7 @@ import { TaskContext } from "../../context/TaskContext";
 import { AiFillDelete } from "react-icons/ai";
 import { api, endpoints } from "../../api/api";
 import { GiThumbUp } from "react-icons/gi";
-import {motion} from "motion/react"
+import { motion } from "motion/react";
 
 const LatestTasks = () => {
   const { tasks } = useContext(TaskContext);
@@ -17,9 +17,20 @@ const LatestTasks = () => {
 
   const priorityMeta = (p) => {
     const v = (p || "medium").toLowerCase();
-    if (v === "high") return { label: "High", cls: "bg-rose-500/15 text-rose-300 border-rose-500/30" };
-    if (v === "low") return { label: "Low", cls: "bg-sky-500/15 text-sky-300 border-sky-500/30" };
-    return { label: "Medium", cls: "bg-amber-500/15 text-amber-300 border-amber-500/30" };
+    if (v === "high")
+      return {
+        label: "High",
+        cls: "bg-rose-500/15 text-rose-300 border-rose-500/30",
+      };
+    if (v === "low")
+      return {
+        label: "Low",
+        cls: "bg-sky-500/15 text-sky-300 border-sky-500/30",
+      };
+    return {
+      label: "Medium",
+      cls: "bg-amber-500/15 text-amber-300 border-amber-500/30",
+    };
   };
 
   const TaskDelete = async (id) => {
@@ -32,7 +43,7 @@ const LatestTasks = () => {
   return (
     <div className="mt-6 ml-14 text-white">
       <h2 className="text-2xl md:text-3xl font-bold text-white">
-         📝Your Latest Tasks
+        📝Your Latest Tasks
       </h2>
 
       <div
@@ -53,28 +64,36 @@ const LatestTasks = () => {
             >
               <div className="min-w-0">
                 <div className="text-lg flex items-center gap-2 break-words">
-                  <span className={task.completed ? "line-through text-slate-300" : "text-white"}>
+                  <span
+                    className={
+                      task.completed
+                        ? "line-through text-slate-300"
+                        : "text-white"
+                    }
+                  >
                     {task.title}
                   </span>
                 </div>
                 <div className="mt-2 flex items-center gap-2 flex-wrap">
                   <span
-                        className={`inline-flex items-center gap-2 text-xs font-semibold px-2.5 py-1 rounded-full border ${
-                          task.completed
-                            ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
-                            : "bg-slate-500/10 text-slate-300 border-slate-500/20"
-                        }`}
-                      >
-                        {task.completed ? (
-                          <>
-                            <GiThumbUp className="text-base" />
-                            Completed
-                          </>
-                        ) : (
-                          "In progress"
-                        )}
-                      </span>
-                  <span className={`text-[11px] font-semibold px-2 py-1 rounded-full border ${p.cls}`}>
+                    className={`inline-flex items-center gap-2 text-xs font-semibold px-2.5 py-1 rounded-full border ${
+                      task.completed
+                        ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
+                        : "bg-slate-500/10 text-slate-300 border-slate-500/20"
+                    }`}
+                  >
+                    {task.completed ? (
+                      <>
+                        <GiThumbUp className="text-base" />
+                        Completed
+                      </>
+                    ) : (
+                      "In progress"
+                    )}
+                  </span>
+                  <span
+                    className={`text-[11px] font-semibold px-2 py-1 rounded-full border ${p.cls}`}
+                  >
                     {p.label}
                   </span>
                   <span className="text-[11px] font-semibold px-2 py-1 rounded-full border border-slate-600 bg-slate-950/20 text-slate-200">
@@ -82,13 +101,13 @@ const LatestTasks = () => {
                   </span>
                 </div>
               </div>
-              <button
+              <motion.button
                 whileHover={{ scale: 1.08 }}
                 className="bg-gray-900 shadow shadow-white/25 border border-gray-600 hover:bg-gray-800 hover:shadow-white/65 p-3 rounded-2xl cursor-pointer"
                 onClick={() => TaskDelete(task._id)}
               >
                 {<AiFillDelete />}
-              </button>
+              </motion.button>
             </motion.div>
           );
         })}

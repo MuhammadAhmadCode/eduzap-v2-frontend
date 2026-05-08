@@ -19,8 +19,8 @@ const LoginPage = () => {
       setUser(res.data);
       navigate("/");
     } catch (error) {
-      const errorMessage = error.response.data.errors[0].error;
-      console.error(errorMessage);
+      const errorMessage = error.response.data.message;
+      console.log(errorMessage);
       setStatus(errorMessage);
     }
   };
