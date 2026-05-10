@@ -1,9 +1,7 @@
 import axios from "axios";
 
-export const BASE_URL = "https://eduzap-v2-backend-muhammadahmadcode6735-8ntbe45v.leapcell.dev/api";
-
 export const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 });
 
