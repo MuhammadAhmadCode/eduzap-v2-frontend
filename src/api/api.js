@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "http://localhost:3000/api";
+export const BASE_URL = "https://eduzap-v2-backend-muhammadahmadcode6735-8ntbe45v.leapcell.dev/api";
 
 export const api = axios.create({
   baseURL: BASE_URL,
